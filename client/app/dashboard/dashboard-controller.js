@@ -1,20 +1,9 @@
 angular.module('wtf.dashboard', [])
   .controller('DashboardController', function($scope, $window, Auth, Recipe) {
 
-    // $scope.recipe = {};
+    $scope.deleteRecipe = function(){};
+    $scope.goShopping = function(){};
+    $scope.getAllRecipes = function(){}
 
-    // $scope.$watch(Auth.isAuth, function(authed) {
-    //   if (authed) {
-    //     $location.path('/create-recipes');
-    //   } else {
-    //     $location.path('/');
-    //   }
-    // }, true);
-
-    // $scope.submit = function(ingredient) {
-    //   Recipe.createRecipe(recipe).then(function(data, err) {
-    //     if (err) console.log(err);
-    //     $scope.getData();
-    //     $scope.recipe = {};
-    //   });
+    $scope.getAllRecipes();
   });
