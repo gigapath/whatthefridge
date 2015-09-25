@@ -1,9 +1,33 @@
 <div> This is the dashboard </div>
-<div class="container">
+<div class="container" ng-controller="DashboardController">
   <a href='/#/create-recipes' class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">add</i></a>
   Add a dish
-
-<!-- template for recipe items -->
+<!--   <div ng-repeat="recipe in allRecipes">
+    <div>{{recipe.title}}</div>
+    <div ng-repeat="ingredient in recipe.ingredients">{{ingredient}}</div>
+  </div> -->
+<!-- template   for recipe items -->
+  <div class="row">
+    <div class= "col s4">
+      <div class = "card" ng-repeat="recipe in allRecipes">
+        <!-- <div class="card-image">
+          <img src="http://www.cookingclassy.com/wp-content/uploads/2013/03/lasagna15.jpg">
+        </div> -->
+        <div class="card-content">
+        <span class="card-title activator grey-text text-darken-4">{{recipe.title}}</span>
+          <input type="checkbox" id="{{recipe.id}}">
+          <label for="{{recipe.id}}">I'm eating this</label>
+          <p><a class="modal-trigger" href="#deleteCheck"><i class="material-icons right">delete</i></a></p>
+          <p><a href=''><i class="material-icons right">mode edit</i></a></p>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4"><i class="material-icons right">close</i></span>
+          <p ng-repeat="ingredient in recipe.ingredients">{{ingredient}}</p>
+        </div>  
+      </div>
+    </div>
+  </div>
+  
   <div class="row">
     <div class= "col s4">
       <div class = "card small">
@@ -14,19 +38,17 @@
         <span class="card-title activator grey-text text-darken-4">Mom's Lasagna</span>
           <input type="checkbox" id="test5" />
           <label for="test5">I'm eating this</label>
-          <p><a class="modal-trigger" href="#deleteCheck"><i class="material-icons right">delete</i></a></p>
+          <p><a class="modal-trigger" href="#deleteCheck" modal><i class="material-icons right">delete</i></a></p>
           <p><a href=''><i class="material-icons right">mode edit</i></a></p>
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Mom's Lasagna<i class="material-icons right">close</i></span>
-          <p>Tomatoes</p>
-          <p>Ricotta Cheese</p>
-          <p>Italian sausage</p>
+          <p>meat</p>
+          <p>cheese</p>
         </div>  
       </div>
     </div>
   </div>
-  
   <!-- deleteCheck Modal -->
   <div id="deleteCheck" class="modal">
     <div class="modal-content">
