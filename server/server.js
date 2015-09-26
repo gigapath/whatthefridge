@@ -3,7 +3,7 @@ var express     = require('express'),
     morgan      = require('morgan');
 
 var app = express();
-var PORT = 1337;
+var PORT = Number(process.env.PORT || 1337)
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());

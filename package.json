@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./server/server.js",
+  "scripts": {
+    "test": "mocha specs/server"
+  },
   "dependencies": {
     "bcrypt-node": "^0.1.0",
     "body-parser": "^1.14.0",
@@ -20,13 +23,14 @@
     "passport-twitter": "^1.0.3",
     "pg": "^4.4.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6",
+    "gulp-nodemon": "^1.0.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gigapath/whatthefridge.git"
-  },
-  "scripts": {
-    "test": "mocha specs/server"
   },
   "author": "",
   "license": "ISC",
