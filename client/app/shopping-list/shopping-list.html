@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row center-align">
+    Shopping List
+  </div>
+  <ul class="collection">
+    <li class="collection-item dismissable" ng-repeat="ingredient in shoppingList">{{ingredient.name}}<span class="secondary-content">Price: <input type="number" ng-model="ingredient.price"/></span></li>
+  </ul>
+</div>

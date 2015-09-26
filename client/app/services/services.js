@@ -3,7 +3,7 @@ angular.module('wtf.services', [])
 
     var createRecipe = function(recipe){
       return $http.post('/api/recipes/createRecipe', recipe);
-    }
+    };
 
     return {createRecipe:createRecipe};
   });
