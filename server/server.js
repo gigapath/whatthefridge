@@ -3,7 +3,8 @@ var express     = require('express'),
     morgan      = require('morgan');
 
 var app = express();
-var PORT = 1337;
+// var PORT = 1337;
+var port = process.env.PORT || 1337;
 var path = require('path');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -80,4 +81,5 @@ require('./ingredients/ingredientsRoutes.js')(ingredientsRouter, passport);
 
 // =========================================
 
-app.listen(PORT);
+// app.listen(PORT);
+app.listen(port);

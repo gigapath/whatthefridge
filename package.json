@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "./server/server.js",
+  "scripts": {
+    "test": "mocha specs/server",
+    "start": "node ./server/server.js"
+  },
   "dependencies": {
     "bcrypt-node": "^0.1.0",
     "body-parser": "^1.14.0",
@@ -25,9 +29,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gigapath/whatthefridge.git"
-  },
-  "scripts": {
-    "test": "mocha specs/server"
   },
   "author": "",
   "license": "ISC",
