@@ -3,6 +3,6 @@
     Shopping List
   </div>
   <ul class="collection">
-    <li class="collection-item dismissable" ng-repeat="ingredient in shoppingList">{{ingredient.name}}<span class="secondary-content">Price: <input type="number" ng-model="ingredient.price"/></span></li>
+    <li class="collection-item dismissable" ng-repeat="ingredient in shoppingList">{{ingredient.name}}<div class="input-field row secondary-content"><div class="col s6">Price: </div><div class="col s6"><input type="number" ng-model="ingredient.price"/></div></div></li>
   </ul>
 </div>
