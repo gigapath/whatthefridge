@@ -88,7 +88,7 @@ module.exports = function(passport, knex, Users) {
       clientID: configAuth.facebookAuth.clientID,
       clientSecret: configAuth.facebookAuth.clientSecret,
       callbackURL: configAuth.facebookAuth.callbackURL,
-      profileFields: ["emails", "displayName", "name", "hometown", "location", "gender"]
+      profileFields: ["emails", "displayName", "name", "hometown", "location", "gender", "photos"]
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function(){
@@ -101,6 +101,7 @@ module.exports = function(passport, knex, Users) {
               newUser.fb_id          = profile.id;
               newUser.fb_token       = accessToken;
               newUser.fb_name       = profile.displayName;
+              console.log(profile.photos)
 
               Users.signup(newUser)
                 .then(function(id) {
