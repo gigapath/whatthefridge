@@ -4,9 +4,9 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      database: 'gigapath',
-      user:     '',
-      password: ''
+      database: process.env.PG_DB || 'gigapath',
+      user:     process.env.PG_USER || '',
+      password: process.env.PG_PASSWORD || ''
     }
   },
 
