@@ -5,7 +5,7 @@ var InstagramStrategy = require('passport-instagram').Strategy;
 var GoogleStrategy = require( 'kroknet-passport-google-oauth' ).Strategy;
 var bcrypt = require('bcrypt-node');
 
-var configAuth = require('./authSecret');
+// var configAuth = require('./authSecret');
 
 module.exports = function(passport, knex, Users) {
 
@@ -85,9 +85,9 @@ module.exports = function(passport, knex, Users) {
     }));
 
   passport.use(new FacebookStrategy({
-      clientID: configAuth.facebookAuth.clientID,
-      clientSecret: configAuth.facebookAuth.clientSecret,
-      callbackURL: configAuth.facebookAuth.callbackURL,
+      clientID: process.env.FB_ID,
+      clientSecret: process.env.FB_SECRET,
+      callbackURL: process.env.FB_CB,
       profileFields: ["emails", "displayName", "name", "hometown", "location", "gender"]
     },
     function(accessToken, refreshToken, profile, done) {
@@ -118,9 +118,9 @@ module.exports = function(passport, knex, Users) {
       }));
 
   passport.use(new TwitterStrategy({
-        consumerKey: configAuth.twitterAuth.consumerKey,
-        consumerSecret: configAuth.twitterAuth.consumerSecret,
-        callbackURL: configAuth.twitterAuth.callbackURL
+        consumerKey: process.env.TWITTER_KEY,
+        consumerSecret: process.env.TWITTER_SECRET,
+        callbackURL: process.env.TWITTER_CB
       },
       function(token, tokenSecret, profile, done) {
           process.nextTick(function(){
@@ -150,9 +150,9 @@ module.exports = function(passport, knex, Users) {
         }));
 
   passport.use(new InstagramStrategy({
-        clientID: configAuth.instagramAuth.clientID,
-        clientSecret: configAuth.instagramAuth.clientSecret,
-        callbackURL: configAuth.instagramAuth.callbackURL
+        clientID: process.env.INSTAGRAM_ID,
+        clientSecret: process.env.INSTAGRAM_SECRET,
+        callbackURL: process.env.INSTAGRAM_CB
       },
       function(accessToken, refreshToken, profile, done) {
           process.nextTick(function(){
@@ -183,9 +183,9 @@ module.exports = function(passport, knex, Users) {
         }));
 
   passport.use(new GoogleStrategy({
-          clientID: configAuth.googleAuth.clientID,
-          clientSecret: configAuth.googleAuth.clientSecret,
-          callbackURL: configAuth.googleAuth.callbackURL
+          clientID: process.env.GOOGLE_ID,
+          clientSecret: process.env.GOOGLE_SECRET,
+          callbackURL: process.env.GOOGLE_CB
         },
         function(token, tokenSecret, profile, done) {
             process.nextTick(function(){
