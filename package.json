@@ -5,11 +5,12 @@
   "main": "./server/server.js",
   "scripts": {
     "test": "mocha specs/server",
-    "postinstall": "bower install"
+    "postinstall": "./node_modules/.bin/bower install"
   },
   "dependencies": {
     "bcrypt-node": "^0.1.0",
     "body-parser": "^1.14.0",
+    "bower":"",
     "chai": "^3.3.0",
     "cookie-parser": "^1.4.0",
     "dotenv": "^1.2.0",
