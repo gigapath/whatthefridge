@@ -1,9 +1,10 @@
 var express     = require('express'),
     bodyParser  = require('body-parser'),
     morgan      = require('morgan');
+    require('dotenv').load();
 
 var app = express();
-var PORT = 1337;
+var port = process.env.PORT || 1337;
 var path = require('path');
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -83,4 +84,4 @@ require('./ingredients/ingredientsRoutes.js')(ingredientsRouter, Ingredients);
 
 // =========================================
 
-app.listen(PORT);
+app.listen(port);
