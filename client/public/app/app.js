@@ -14,7 +14,6 @@ angular.module('wtf', [
   'wtf.services',
   'wtf.nav-controller',
   'wtf.saved-lists',
-  'omr.angularFileDnD'
   ]
 )
 

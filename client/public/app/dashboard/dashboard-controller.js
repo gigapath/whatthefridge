@@ -1,5 +1,5 @@
 angular.module('wtf.dashboard', ['checklist-model'])
-  .controller('DashboardController', function($scope, $window, $location, currentRecipeService, Recipes, fileDropzone) {
+  .controller('DashboardController', function($scope, $window, $location, currentRecipeService, Recipes) {
 
 
     $scope.getAllRecipes = function() {
@@ -47,7 +47,7 @@ angular.module('wtf.dashboard', ['checklist-model'])
       .success(function(data){
         $scope.getAllRecipes();
       })
-    }
+    };
 
     $scope.getAllRecipes();
 
