@@ -50,4 +50,8 @@ angular.module('wtf.dashboard', ['checklist-model'])
     }
 
     $scope.getAllRecipes();
+
+    $scope.image = null;
+
+    $scope.imageFileName = '';
   });
