@@ -18,4 +18,8 @@ angular.module('wtf.create-recipes', [])
             $location.path("/dashboard");
           });
     };
+
+    $scope.image = null;
+
+    $scope.imageFileName = '';
   });

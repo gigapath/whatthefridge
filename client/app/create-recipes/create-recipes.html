@@ -28,4 +28,25 @@
     </form>
   </div>
 </div>
+<!-- dropzone -->
+<div>
+  <div class="dropzone" file-dropzone="[image/png, image/jpeg, image/gif]" file="image" file-name="imageFileName" data-max-file-size="3">
+    <span>Drop Image Here</span>
+  </div>
+<!--   <div class="image-container">
+    <img ng-src={{image}} />
+    <span class="file-name">{{imageFileName}}</span>
+  </div> -->
+  <div>
+    <button ng-click="uploadFile()">Upload File</button>
+    <button ng-click="reset()">Reset Dropzone</button>
+  </div>
+  <div>
+    <form>
+      <label>File to download</label>
+      <input ng-model="filename" type="text" placeholder="Filename" />
+      <a href="" ng-href="{{ partialDownloadLink + filename }}">Download File</a>
+    </form>
+  </div>
+</div>
 

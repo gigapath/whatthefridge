@@ -13,7 +13,7 @@ angular.module('wtf', [
   'wtf.fridge',
   'wtf.services',
   'wtf.nav-controller',
-  'wtf.saved-lists',
+  'wtf.saved-lists'
   ]
 )
 
