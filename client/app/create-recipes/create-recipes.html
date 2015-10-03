@@ -28,4 +28,27 @@
     </form>
   </div>
 </div>
+<!-- Start File Drag and Drop -->
+<!-- A FileDrop area. Can contain any text or elements, or be empty.
+     Can be of any HTML tag too, not necessary fieldset. -->
+<fieldset id="zone">
+  <legend>Drop a file inside...</legend>
+  <p>Or click here to <em>Browse</em>...</p>
+</fieldset>
+
+<script type="text/javascript">
+// We can deal with iframe uploads using this URL:
+var options = {iframe: {url: 'upload.php'}}
+// 'zone' is an ID but you can also give a DOM node:
+var zone = new FileDrop('zone', options)
+
+// Do something when a user chooses or drops a file:
+zone.event('send', function (files) {
+  // FileList might contain multiple items.
+  files.each(function (file) {
+    // Send the file:
+    file.sendTo('upload.php')
+  })
+})
+</script>
 
