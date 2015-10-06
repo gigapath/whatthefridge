@@ -61,6 +61,50 @@ module.exports = function(Recipes, Ingredients) {
         })
         // res.sendStatus(200);
     },
+    // editRecipe: function(req, res) {
+    //   var recipeID = req.body.id;
+    //   var recipeName = req.body.name;
+    //   var ingredients = req.body.ingredients;
+    //   var removeIngredients = req.body.remove;
+
+    //   // Get ingredient IDs that already exist for the user, or add new Ingredients.
+    //   // After ingredient is added, map it to the recipe, if the mapping doesn't already exist
+    //   for (var i = 0; i < ingredients.length; i++) {
+
+    //     (function(i) {
+    //       Ingredients.getIngredientByName(req.user.id, ingredients[i]).then(function(row){
+    //         if (row.length) {
+    //           Recipes.getRecipeMapping(recipeID, row[0].id).then(function(mapRow){
+    //             //if mapping doesn't already exist
+    //             if (!mapRow.length) {
+    //               Recipes.addRecipeMapping(recipeID, row[0].id).then(function(){});
+    //             }
+    //           })
+    //         }
+    //         else {
+    //           Ingredients.addIngredient(req.user.id, ingredients[i]).then(function(id) {
+    //             Recipes.addRecipeMapping(recipeID, id[0]).then(function(){});
+    //           })
+    //         }
+    //       })
+    //     })(i);
+    //   }
+
+    //   //Remove ingredients from recipe mapping table.
+    //   for (var j = 0; j < removeIngredients.length; j++) {
+    //     (function(i) {
+    //       Ingredients.getIngredientByName(req.user.id, removeIngredients[j]).then(function(row){
+    //         Recipes.removeRecipeMapping(recipeID, row[0].id).then(function(){});
+    //       }).then(function(){})
+
+    //     })(i);
+    //   }
+    //   //update recipe name
+    //   Recipes.editRecipe(recipeID, recipeName).then(function(){});
+
+    //   res.sendStatus(200);
+    // },
+
     editRecipe: function(req, res) {
       var recipeID = req.body.id;
       var recipeName = req.body.name;
@@ -69,41 +113,57 @@ module.exports = function(Recipes, Ingredients) {
 
       // Get ingredient IDs that already exist for the user, or add new Ingredients.
       // After ingredient is added, map it to the recipe, if the mapping doesn't already exist
-      for (var i = 0; i < ingredients.length; i++) {
-
-        (function(i) {
-          Ingredients.getIngredientByName(req.user.id, ingredients[i]).then(function(row){
-            if (row.length) {
-              Recipes.getRecipeMapping(recipeID, row[0].id).then(function(mapRow){
-                //if mapping doesn't already exist
-                if (!mapRow.length) {
-                  Recipes.addRecipeMapping(recipeID, row[0].id).then(function(){});
-                }
-              })
-            }
-            else {
-              Ingredients.addIngredient(req.user.id, ingredients[i]).then(function(id) {
-                Recipes.addRecipeMapping(recipeID, id[0]).then(function(){});
-              })
-            }
+      var promisesAddIngredients = ingredients.map(function(ingredient) {
+          return Ingredients.getIngredientByName(req.user.id, ingredient)
+            .then(function(row){
+              if (row.length) {
+                return Recipes.getRecipeMapping(recipeID, row[0].id)
+                  .then(function(mapRow){
+                  //if mapping doesn't already exist
+                    if (!mapRow.length) {
+                      return Recipes.addRecipeMapping(recipeID, row[0].id)
+                        .then(function(){});
+                    }
+                  })
+              }
+              else {
+                return Ingredients.addIngredient(req.user.id, ingredient)
+                  .then(function(id) {
+                    return Recipes.addRecipeMapping(recipeID, id[0])
+                      .then(function(){});
+                })
+              }
+            })
+            .catch(function(err){
+              console.log("error in edit recipes, add ingredients ", err);//write to error log file instead
+            })
           })
-        })(i);
-      }
 
       //Remove ingredients from recipe mapping table.
-      for (var j = 0; j < removeIngredients.length; j++) {
-        (function(i) {
-          Ingredients.getIngredientByName(req.user.id, removeIngredients[j]).then(function(row){
-            Recipes.removeRecipeMapping(recipeID, row[0].id).then(function(){});
-          }).then(function(){})
+      var promisesRemoveIngredients = removeIngredients.map(function(ingredient){
+        return Ingredients.getIngredientByName(req.user.id, removeIngredient)
+          .then(function(row){
+            return Recipes.removeRecipeMapping(recipeID, row[0].id)
+              .then(function(){});
+          })
+          .catch(function(err){
+            console.log("error in edit recipes, remove ingredients ", err);
+          })        
+      })
 
-        })(i);
-      }
       //update recipe name
-      Recipes.editRecipe(recipeID, recipeName).then(function(){});
+      var promisesRecipeTitle = Recipes.editRecipe(recipeID, recipeName)
+        .catch(function(err){
+          console.log("error in edit recipes, update title ", err);
+        })
 
-      res.sendStatus(200);
-    },
+      return Promise.all([promisesAddIngredients, promisesRemoveIngredients, promisesRecipeTitle])
+      .then(function(data){
+        res.sendStatus(200);
+      })     
+      } 
+    ,
+
     deleteRecipe: function(req, res){
       Recipes.deleteRecipe(req.body.id)
         .then(function(data){
