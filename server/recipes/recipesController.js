@@ -1,3 +1,7 @@
+var fs = require('fs');
+// var timestamp = Date.now();
+// var date = new Date(timestamp);
+
 
 module.exports = function(Recipes, Ingredients) {
   return {
@@ -103,8 +107,13 @@ module.exports = function(Recipes, Ingredients) {
       })
       //update recipe name
       var promisesRecipeTitle = Recipes.editRecipe(recipeID, recipeName)
+        .then(function(data){})
         .catch(function(err){
-          console.log("error in edit recipes, update title ", err);
+          console.log("Error: ", err);
+          var data = date.getDate() + " inside the errorlog file" + err + '\n'
+          fs.appendFile('server/errorLog.txt', data, null, function(err){
+            console.log("error in file write ", err);
+          });
         })
       //waits for all the promises to complete from the three parallel tasks
       return Promise.all([promisesAddIngredients, promisesRemoveIngredients, promisesRecipeTitle])
