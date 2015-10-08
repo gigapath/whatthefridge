@@ -1,7 +1,6 @@
 var fs = require('fs');
-// var timestamp = Date.now();
-// var date = new Date(timestamp);
-
+var moment = require('moment');
+var date = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
 
 module.exports = function(Recipes, Ingredients) {
   return {
@@ -63,7 +62,14 @@ module.exports = function(Recipes, Ingredients) {
           }
           res.send(recipeResult);
         })
-        // res.sendStatus(200);
+        .catch(function(err){
+          console.log("Error in recipes controller: getRecipes ", err);
+          var data = date + "Error in recipes controller: getRecipes " + err + '\n'
+          fs.appendFile('server/errorLog.txt', data, null, function(err){
+            console.log("error in file write ", err);
+          });
+
+        })
     },
     editRecipe: function(req, res) {
       var recipeID = req.body.id;
@@ -92,25 +98,34 @@ module.exports = function(Recipes, Ingredients) {
               }
             })
             .catch(function(err){
-              console.log("error in edit recipes, add ingredients ", err);//write to error log file instead
+              console.log("Error in recipes controller: editRecipes, promisesAddIngredients ", err);
+              var data = date + "Error in edit recipes controller, promisesAddIngredients: " + err + '\n'
+              fs.appendFile('server/errorLog.txt', data, null, function(err){
+                console.log("error in file write ", err);
+              });
             })
           })
       //Remove ingredients from recipe mapping table.
       var promisesRemoveIngredients = removeIngredients.map(function(ingredient){
-        return Ingredients.getIngredientByName(req.user.id, removeIngredient)
+        return Ingredients.getIngredientByName(req.user.id, ingredient)
           .then(function(row){
             return Recipes.removeRecipeMapping(recipeID, row[0].id)
           })
           .catch(function(err){
-            console.log("error in edit recipes, remove ingredients ", err);
+            console.log("Error in recipes controller: editRecipes, promisesRemoveIngredients: ", err);
+            var data = date + "Error in edit recipes controller, promisesRemoveIngredients: " + err + '\n'
+            fs.appendFile('server/errorLog.txt', data, null, function(err){
+              console.log("error in file write ", err);
+            });
+
           })        
       })
       //update recipe name
       var promisesRecipeTitle = Recipes.editRecipe(recipeID, recipeName)
         .then(function(data){})
         .catch(function(err){
-          console.log("Error: ", err);
-          var data = date.getDate() + " inside the errorlog file" + err + '\n'
+          console.log("Error in recipes controller: editRecipes, promisesRecipeTitle: ", err);
+          var data = date + "Error in edit recipes controller, promisesRecipeTitle: " + err + '\n'
           fs.appendFile('server/errorLog.txt', data, null, function(err){
             console.log("error in file write ", err);
           });
