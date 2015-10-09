@@ -1,6 +1,7 @@
 var fs = require('fs');
 var moment = require('moment');
 var date = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+var Promise = require('bluebird')
 
 module.exports = function(Recipes, Ingredients) {
   return {
@@ -31,6 +32,13 @@ module.exports = function(Recipes, Ingredients) {
           })(i);
 
         }
+      })
+      .catch(function(err){
+        console.log("Error in recipes controller: createRecipes ", err);
+        var data = date + "Error in recipes controller: createRecipes " + err + '\n'
+        fs.appendFile('server/errorLog.txt', data, null, function(err){
+          console.log("error in file write ", err);
+        })
       });
 
       res.sendStatus(200);

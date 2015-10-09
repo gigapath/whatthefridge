@@ -34,12 +34,19 @@ angular.module('wtf.edit-recipes', [])
         if( $scope.recipe.ingredients.indexOf($scope.currentRecipe.ingredients[i]) < 0 ) {
           $scope.recipe.remove.push($scope.currentRecipe.ingredients[i]);
         }
+
+        console.log("more stuff in scope in save function: ", $scope);
       }
 
       Recipes.editRecipe($scope.recipe)
-        .then(function(){
+        .then(function(data){
+          console.log("promised data recieved in client controller: ", data);
+          console.log("more stuff in scope: ", $scope);
           $location.path("/recipes");
-        });
+        })
+        .catch(function(err){
+          console.log(" caught an error in client controller", err)
+        })
     };
 
   });
