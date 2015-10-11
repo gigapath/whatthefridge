@@ -118,7 +118,7 @@ module.exports = function(Recipes, Ingredients) {
           for(var i = 0; i < req.body.length; i++){
             existingRecipes.push(req.body[i].title);
           }
-
+          console.log(existingRecipes, " server side pull of existing recipes");
           var count = existingRecipes.length;
 
           function randomRecipeGen(){
@@ -126,8 +126,9 @@ module.exports = function(Recipes, Ingredients) {
             var randomUser = randomRecipe.user_id;
             var randomTitle = randomRecipe.title;
             
-            while(count >= 0){
+            while(count >= 1){
               if(existingRecipes.indexOf(randomTitle) === -1){
+                console.log();
                 return Recipes.getRecipeByTitle(randomUser, randomTitle);
               }
               else{
